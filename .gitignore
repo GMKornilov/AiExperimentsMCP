@@ -1,0 +1,9 @@
+data/
+.env
+.env.*
+!.env.example
+config.yaml
+config.docker.local.yaml
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo

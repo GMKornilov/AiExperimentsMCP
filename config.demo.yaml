@@ -1,0 +1,13 @@
+listen: 127.0.0.1:8080
+database: data/demo.db
+timezone: Europe/Moscow
+task_timeout: 2m
+llm:
+  provider: demo
+  service: demo
+  model: deterministic-demo
+  temperature: 1
+  max_iterations: 8
+mcp_servers:
+  - name: demo
+    url: http://127.0.0.1:8081/mcp

@@ -1,0 +1,40 @@
+services:
+  agent:
+    build: .
+    image: aichallenge-scheduled:local
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 20s
+    depends_on:
+      - demo-mcp
+    ports:
+      - "127.0.0.1:${AGENT_PORT:-8080}:8080"
+    volumes:
+      - type: bind
+        source: ${AGENT_CONFIG:-./config.docker.demo.yaml}
+        target: /app/config.yaml
+        read_only: true
+        bind:
+          create_host_path: false
+      - agent-data:/app/data
+    env_file:
+      - path: ${AGENT_ENV_FILE:-.env}
+        required: false
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/api/health"]
+      interval: 40s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  demo-mcp:
+    build: .
+    image: aichallenge-scheduled-mcp:local
+    command: ["demo-mcp", "--listen", "0.0.0.0:8081"]
+    init: true
+    restart: unless-stopped
+
+volumes:
+  agent-data:

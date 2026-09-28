@@ -1,0 +1,17 @@
+listen: 0.0.0.0:8080
+database: /app/data/agent.db
+timezone: Europe/Moscow
+task_timeout: 5m
+llm:
+  provider: openai-compatible
+  service: deepseek
+  model: deepseek-chat
+  base_url: https://api.deepseek.com
+  api_key: ${DEEPSEEK_API_KEY}
+  temperature: 0
+  max_iterations: 8
+mcp_servers:
+  - name: demo
+    url: http://demo-mcp:8081/mcp
+    # Для MCP на хосте: http://host.docker.internal:PORT/mcp
+    # Для внешнего MCP укажите его URL и нужные headers.

@@ -1,0 +1,17 @@
+listen: 127.0.0.1:8080
+database: data/agent.db
+timezone: Europe/Moscow
+task_timeout: 5m
+llm:
+  provider: openai-compatible
+  service: deepseek
+  model: deepseek-chat
+  base_url: https://api.deepseek.com
+  api_key: ${DEEPSEEK_API_KEY}
+  temperature: 1
+  max_iterations: 8
+mcp_servers:
+  - name: example
+    url: http://127.0.0.1:8081/mcp
+    # headers:
+    #   Authorization: Bearer ${MCP_TOKEN}
